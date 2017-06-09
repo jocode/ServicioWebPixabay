@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="#a4c8f1">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <com.github.snowdream.android.widget.SmartImageView
             android:id="@+id/smImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"/>
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="false" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/tvIdImage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:textSize="20sp"
+            android:text="Hola"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/idImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:text="Hola"/>
-
-            <TextView
-                android:id="@+id/tvTags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:text="Hola"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Hola"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

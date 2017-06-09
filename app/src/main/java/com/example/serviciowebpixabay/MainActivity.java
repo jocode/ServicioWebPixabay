@@ -20,6 +20,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Console;
 import java.util.ArrayList;
@@ -61,9 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     try {
-                        JSONArray jsonArray = new JSONArray(new String(responseBody));
 
-                        Log.e("Id image", jsonArray.getString(0).toString());
+
+                        JSONObject jsonObject = new JSONObject((new String(responseBody)));
+                        JSONArray jsonArray = jsonObject.optJSONArray("hits");
+
+                        Log.e("Hola: ", jsonArray.getString(0));
 
                         for (int i = 0; i < jsonArray.length(); i++){
                             id.add(jsonArray.getJSONObject(i).getString("id"));
@@ -119,14 +123,14 @@ public class MainActivity extends AppCompatActivity {
             ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout.items_image, null);
 
             smartImageView = (SmartImageView) viewGroup.findViewById(R.id.smImage);
-            tvId = (TextView) viewGroup.findViewById(R.id.idImage);
+            tvId = (TextView) viewGroup.findViewById(R.id.tvIdImage);
             tvTags = (TextView) viewGroup.findViewById(R.id.tvTags);
 
             Rect dimension = new Rect(smartImageView.getLeft(), smartImageView.getTop(), smartImageView.getRight(), smartImageView.getBottom());
             smartImageView.setImageUrl(imagen.get(position).toString(), dimension);
 
             tvId.setText(id.get(position).toString());
-            tvTags.setText(id.get(position).toString());
+            tvTags.setText(tags.get(position).toString());
 
             return viewGroup;
         }
