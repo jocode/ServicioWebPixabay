@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.serviciowebpixabay.Adapter.AdapterListView;
 import com.github.snowdream.android.widget.SmartImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -30,6 +31,9 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
 
     ListView lvResponse;
+
+    //Lista donde almacenaremos los objetos
+    ArrayList<Images> list_images = new ArrayList<>();
     ArrayList id = new ArrayList();
     ArrayList tags = new ArrayList();
     ArrayList imagen = new ArrayList();
@@ -63,19 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
 
-
                         JSONObject jsonObject = new JSONObject((new String(responseBody)));
                         JSONArray jsonArray = jsonObject.optJSONArray("hits");
 
-                        Log.e("Hola: ", jsonArray.getString(0));
-
                         for (int i = 0; i < jsonArray.length(); i++){
-                            id.add(jsonArray.getJSONObject(i).getString("id"));
-                            tags.add(jsonArray.getJSONObject(i).getString("tags"));
-                            imagen.add(jsonArray.getJSONObject(i).getString("previewURL"));
+                            list_images.add(new Images(jsonArray.getJSONObject(i)));
                         }
 
-                        lvResponse.setAdapter(new AdapterListView(getApplicationContext()));
+                        lvResponse.setAdapter(new AdapterListView(getApplicationContext(), list_images));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -90,49 +89,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private  class AdapterListView extends BaseAdapter {
-
-        Context context;
-        LayoutInflater layoutInflater;
-        SmartImageView smartImageView;
-        TextView tvId, tvTags;
-
-        public AdapterListView(Context applicationContext) {
-            this.context = applicationContext;
-            layoutInflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return imagen.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout.items_image, null);
-
-            smartImageView = (SmartImageView) viewGroup.findViewById(R.id.smImage);
-            tvId = (TextView) viewGroup.findViewById(R.id.tvIdImage);
-            tvTags = (TextView) viewGroup.findViewById(R.id.tvTags);
-
-            Rect dimension = new Rect(smartImageView.getLeft(), smartImageView.getTop(), smartImageView.getRight(), smartImageView.getBottom());
-            smartImageView.setImageUrl(imagen.get(position).toString(), dimension);
-
-            tvId.setText(id.get(position).toString());
-            tvTags.setText(tags.get(position).toString());
-
-            return viewGroup;
-        }
-    }
 }
